@@ -1,6 +1,6 @@
 name: color_chooser
 description: Provides a Color Chooser Screen for Flutter. Available for Mobile and Desktop OS.
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/Jules-Media/Color_Chooser
 
 environment:
