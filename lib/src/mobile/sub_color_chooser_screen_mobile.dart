@@ -1,9 +1,13 @@
 library color_chooser;
 
+import '../color_tile_position.dart';
 import 'color_chooser_screen_mobile.dart';
+import 'color_tile.dart';
 
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
 
+/// The Red Color Shades.
 final List<Color> _redColors = [
   Colors.red.shade50,
   Colors.red.shade100,
@@ -22,6 +26,7 @@ final List<Color> _redColors = [
   Colors.red.shade900,
 ];
 
+/// The Pink Color Shades.
 final List<Color> _pinkColors = [
   Colors.pink.shade50,
   Colors.pink.shade100,
@@ -40,6 +45,7 @@ final List<Color> _pinkColors = [
   Colors.pink.shade900,
 ];
 
+/// The Purple Color Shades.
 final List<Color> _purpleColors = [
   Colors.purple.shade50,
   Colors.purple.shade100,
@@ -58,6 +64,7 @@ final List<Color> _purpleColors = [
   Colors.purple.shade900,
 ];
 
+/// The Yellow Color Shades.
 final List<Color> _yellowColors = [
   Colors.yellow.shade50,
   Colors.yellow.shade100,
@@ -76,6 +83,7 @@ final List<Color> _yellowColors = [
   Colors.yellow.shade900,
 ];
 
+/// The Amber Color Shades.
 final List<Color> _amberColors = [
   Colors.amber.shade50,
   Colors.amber.shade100,
@@ -94,6 +102,7 @@ final List<Color> _amberColors = [
   Colors.amber.shade900,
 ];
 
+/// The Orange Color Shades.
 final List<Color> _orangeColors = [
   Colors.orange.shade100,
   Colors.orange.shade200,
@@ -124,6 +133,7 @@ final List<Color> _orangeColors = [
   Colors.deepOrangeAccent.shade700,
 ];
 
+/// The Lime Color Shades.
 final List<Color> _limeColors = [
   Colors.lime.shade50,
   Colors.lime.shade100,
@@ -142,6 +152,7 @@ final List<Color> _limeColors = [
   Colors.lime.shade900,
 ];
 
+/// The Green Color Shades.
 final List<Color> _greenColors = [
   Colors.green.shade100,
   Colors.green.shade200,
@@ -172,6 +183,7 @@ final List<Color> _greenColors = [
   Colors.lightGreen.shade900,
 ];
 
+/// The Teal Color Shades.
 final List<Color> _tealColors = [
   Colors.teal.shade50,
   Colors.teal.shade100,
@@ -190,6 +202,7 @@ final List<Color> _tealColors = [
   Colors.teal.shade900,
 ];
 
+/// The Indigo Color Shades.
 final List<Color> _indigoColors = [
   Colors.indigo.shade50,
   Colors.indigo.shade100,
@@ -208,6 +221,7 @@ final List<Color> _indigoColors = [
   Colors.indigo.shade900,
 ];
 
+/// The Blue Color Shades.
 final List<Color> _blueColors = [
   Colors.lightBlueAccent.shade100,
   Colors.blue.shade100,
@@ -238,7 +252,8 @@ final List<Color> _blueColors = [
   Colors.blue.shade900,
 ];
 
-final List<Color?> _cyanColors = [
+/// The Cyan Color Shades.
+final List<Color> _cyanColors = [
   Colors.cyan.shade50,
   Colors.cyan.shade100,
   Colors.cyan.shade200,
@@ -254,10 +269,10 @@ final List<Color?> _cyanColors = [
   Colors.cyan.shade700,
   Colors.cyan.shade800,
   Colors.cyan.shade900,
-  null,
 ];
 
-final List<Color?> _brownColors = [
+/// The Brown Color Shades.
+final List<Color> _brownColors = [
   Colors.brown.shade50,
   Colors.brown.shade100,
   Colors.brown.shade200,
@@ -269,7 +284,6 @@ final List<Color?> _brownColors = [
   Colors.brown.shade700,
   Colors.brown.shade800,
   Colors.brown.shade900,
-  null,
 ];
 
 /// The Sub Color Chooser Screen.
@@ -278,16 +292,130 @@ final List<Color?> _brownColors = [
 /// tapped on the [ColorChooserScreenMobile].
 /// It's used to determine the shades shown on this Screen
 @protected
-class SubColorChooserScreenMobile extends StatelessWidget {
+class SubColorChooserScreenMobile extends StatefulWidget {
   const SubColorChooserScreenMobile({
     required this.color,
+    required this.title,
     Key? key,
   }) : super(key: key);
 
+  /// The Color of which this Screens
+  /// showns the different shades.
   final Color color;
+
+  final String title;
+
+  @override
+  State<StatefulWidget> createState() => _SubColorChooserState();
+}
+
+class _SubColorChooserState extends State<SubColorChooserScreenMobile> {
+  /// The Colors represented by this Color Chooser.
+  late final List<Color> _colors;
+
+  @override
+  void initState() {
+    while (_colors.length % 3 != 0) {
+      _colors.add(
+        Theme.of(context).scaffoldBackgroundColor,
+      );
+    }
+
+    if (widget.color == Colors.amber) {
+      _colors = _amberColors;
+    } else if (widget.color == Colors.blue) {
+      _colors = _blueColors;
+    } else if (widget.color == Colors.cyan) {
+      _colors = _cyanColors;
+    } else if (widget.color == Colors.orange) {
+      _colors = _orangeColors;
+    } else if (widget.color == Colors.green) {
+      _colors = _greenColors;
+    } else if (widget.color == Colors.purple) {
+      _colors = _purpleColors;
+    } else if (widget.color == Colors.indigo) {
+      _colors = _indigoColors;
+    } else if (widget.color == Colors.lime) {
+      _colors = _limeColors;
+    } else if (widget.color == Colors.teal) {
+      _colors = _tealColors;
+    } else if (widget.color == Colors.yellow) {
+      _colors = _yellowColors;
+    } else if (widget.color == Colors.red) {
+      _colors = _redColors;
+    } else if (widget.color == Colors.brown || widget.color == Colors.black) {
+      _colors = _brownColors;
+    } else if (widget.color == Colors.pink) {
+      _colors = _pinkColors;
+    } else {
+      _colors = [widget.color];
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: _appBar,
+      body: _body,
+    );
+  }
+
+  /// The AppBar of this Screen.
+  AppBar get _appBar {
+    return AppBar(
+      automaticallyImplyLeading: true,
+      title: Text(widget.title),
+    );
+  }
+
+  /// The Body of this Screen.
+  Scrollbar get _body {
+    return Scrollbar(
+      interactive: true,
+      scrollbarOrientation: ScrollbarOrientation.right,
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        itemCount: _colors.length,
+        reverse: false,
+        addAutomaticKeepAlives: true,
+        addRepaintBoundaries: true,
+        addSemanticIndexes: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        dragStartBehavior: DragStartBehavior.down,
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (_, counter) {
+          final ColorTilePosition pos;
+          Color? colorLeft;
+          Color? colorRight;
+
+          if (counter % 3 == 0) {
+            pos = ColorTilePosition.left;
+            colorRight = _colors[counter + 1];
+          } else if (counter % 3 == 1) {
+            pos = ColorTilePosition.middle;
+            colorLeft = _colors[counter - 1];
+            colorRight = _colors[counter + 1];
+          } else if (counter % 3 == 2) {
+            pos = ColorTilePosition.right;
+            colorLeft = _colors[counter - 1];
+          } else {
+            throw Exception('Unexpected Positioning of Color Tile.');
+          }
+
+          return ColorTile(
+            color: _colors[counter],
+            colorLeft: colorLeft,
+            colorRight: colorRight,
+            position: pos,
+            widgetTitle: widget.title,
+          );
+        },
+      ),
+    );
   }
 }
