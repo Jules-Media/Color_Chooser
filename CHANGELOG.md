@@ -1,3 +1,8 @@
+## 0.1.1
+
+* Implement Color Changing Logic
+
+
 ## 0.1.0
 
 * First Version that sould look good.

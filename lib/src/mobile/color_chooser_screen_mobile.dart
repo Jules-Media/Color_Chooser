@@ -2,6 +2,7 @@ library color_chooser;
 
 import '../color_tile_position.dart';
 import 'color_tile.dart';
+import 'sub_color_chooser_screen_mobile.dart';
 
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ const _colors = <Color>[
 /// but for the User it looks like it just fades away.
 class ColorChooserScreenMobile extends StatefulWidget {
   const ColorChooserScreenMobile({
+    required this.changeColorFunction,
     this.title = 'Choose a Color',
     this.colors = _colors,
     Key? key,
@@ -49,6 +51,12 @@ class ColorChooserScreenMobile extends StatefulWidget {
   /// Color List, that is packed with this
   /// package is used.
   final List<Color> colors;
+
+  /// The Function called to change the
+  /// Color of the App.
+  /// Is called after going through color Chooser
+  /// and Sub Color Chooser;
+  final void Function(Color) changeColorFunction;
 
   @override
   State<StatefulWidget> createState() => _ColorChooserState();
@@ -119,9 +127,22 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
             colorLeft: colorLeft,
             colorRight: colorRight,
             position: pos,
-            widgetTitle: widget.title,
+            onTap: (c) => _openSubColorChooser(c),
           );
         },
+      ),
+    );
+  }
+
+  void _openSubColorChooser(Color color) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => SubColorChooserScreenMobile(
+          color: color,
+          changeColorFunction: widget.changeColorFunction,
+          title: widget.title,
+        ),
       ),
     );
   }

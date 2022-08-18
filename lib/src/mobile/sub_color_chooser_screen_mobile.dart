@@ -296,6 +296,7 @@ class SubColorChooserScreenMobile extends StatefulWidget {
   const SubColorChooserScreenMobile({
     required this.color,
     required this.title,
+    required this.changeColorFunction,
     Key? key,
   }) : super(key: key);
 
@@ -303,7 +304,13 @@ class SubColorChooserScreenMobile extends StatefulWidget {
   /// showns the different shades.
   final Color color;
 
+  /// The Title of this Screen shown in the
+  /// AppBar.
   final String title;
+
+  /// The Function called to change
+  /// the Color of the App.
+  final void Function(Color) changeColorFunction;
 
   @override
   State<StatefulWidget> createState() => _SubColorChooserState();
@@ -411,7 +418,7 @@ class _SubColorChooserState extends State<SubColorChooserScreenMobile> {
             colorLeft: colorLeft,
             colorRight: colorRight,
             position: pos,
-            widgetTitle: widget.title,
+            onTap: (c) => widget.changeColorFunction(c),
           );
         },
       ),

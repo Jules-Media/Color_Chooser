@@ -1,7 +1,6 @@
 library color_chooser;
 
 import '../color_tile_position.dart';
-import 'sub_color_chooser_screen_mobile.dart';
 
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
@@ -29,11 +28,11 @@ import 'package:flutter/material.dart';
 @protected
 class ColorTile extends StatefulWidget {
   const ColorTile({
-    required this.color,
     required this.position,
+    required this.color,
     this.colorRight,
     this.colorLeft,
-    required this.widgetTitle,
+    required this.onTap,
     Key? key,
   })  : assert(
           (position == ColorTilePosition.left &&
@@ -62,11 +61,8 @@ class ColorTile extends StatefulWidget {
   /// The Position of this Color Tile.
   final ColorTilePosition position;
 
-  /// The Title of the Color Chooser Screen.
-  /// This has to be passed, because the Sub Color Chooser needs
-  /// it to display it's title.
-  /// And this is called from here, so this Argument is required.
-  final String widgetTitle;
+  /// The Function called when you tap on this Color Tile.
+  final void Function(Color) onTap;
 
   @override
   State<StatefulWidget> createState() => _ColorTileState();
@@ -89,7 +85,13 @@ class _ColorTileState extends State<ColorTile> {
       child: GestureDetector(
         behavior: HitTestBehavior.deferToChild,
         dragStartBehavior: DragStartBehavior.down,
-        onTap: _openSubColorChooser,
+        onTap: () {
+          if (widget.color == Theme.of(context).scaffoldBackgroundColor) {
+            return;
+          } else {
+            widget.onTap(widget.color);
+          }
+        },
         child: GridTile(
           footer: Text(
             widget.color.value.toRadixString(16).padLeft(11, ' '),
@@ -155,23 +157,5 @@ class _ColorTileState extends State<ColorTile> {
         throw Exception('Unexpected enum Value');
     }
     return gradient;
-  }
-
-  /// Opens the sub Color Chooser Screen and passes
-  /// the color Argument.
-  void _openSubColorChooser() {
-    if (widget.color == Theme.of(context).scaffoldBackgroundColor) {
-      return;
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => SubColorChooserScreenMobile(
-            color: widget.color,
-            title: widget.widgetTitle,
-          ),
-        ),
-      );
-    }
   }
 }
