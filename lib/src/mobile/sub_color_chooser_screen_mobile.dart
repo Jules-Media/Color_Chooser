@@ -315,12 +315,6 @@ class _SubColorChooserState extends State<SubColorChooserScreenMobile> {
 
   @override
   void initState() {
-    while (_colors.length % 3 != 0) {
-      _colors.add(
-        Theme.of(context).scaffoldBackgroundColor,
-      );
-    }
-
     if (widget.color == Colors.amber) {
       _colors = _amberColors;
     } else if (widget.color == Colors.blue) {
@@ -355,6 +349,11 @@ class _SubColorChooserState extends State<SubColorChooserScreenMobile> {
 
   @override
   Widget build(BuildContext context) {
+    while (_colors.length % 3 != 0) {
+      _colors.add(
+        Theme.of(context).scaffoldBackgroundColor,
+      );
+    }
     return Scaffold(
       appBar: _appBar,
       body: _body,

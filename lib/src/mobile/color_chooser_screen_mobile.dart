@@ -1,7 +1,8 @@
 library color_chooser;
 
-import 'package:color_chooser/src/color_tile_position.dart';
-import 'package:color_chooser/src/mobile/color_tile.dart';
+import '../color_tile_position.dart';
+import 'color_tile.dart';
+
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
 
@@ -55,17 +56,12 @@ class ColorChooserScreenMobile extends StatefulWidget {
 
 class _ColorChooserState extends State<ColorChooserScreenMobile> {
   @override
-  void initState() {
+  Widget build(BuildContext context) {
     while (widget.colors.length % 3 != 0) {
       widget.colors.add(
         Theme.of(context).scaffoldBackgroundColor,
       );
     }
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar,
       body: _body,
