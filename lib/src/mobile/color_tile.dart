@@ -69,19 +69,16 @@ class ColorTile extends StatefulWidget {
 }
 
 class _ColorTileState extends State<ColorTile> {
-  late final Size size;
-
-  @override
-  void initState() {
-    size = MediaQuery.of(context).size;
-    super.initState();
-  }
+  /// The Size of the current Screen.
+  Size? size;
 
   @override
   Widget build(BuildContext context) {
+    size ??= MediaQuery.of(context).size;
+
     return SizedBox(
-      width: size.width / 3,
-      height: size.width / 3,
+      width: size!.width / 3,
+      height: size!.width / 3,
       child: GestureDetector(
         behavior: HitTestBehavior.deferToChild,
         dragStartBehavior: DragStartBehavior.down,

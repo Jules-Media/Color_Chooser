@@ -8,7 +8,7 @@ import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
 
 /// All the Colors.
-const _colors = <Color>[
+final _colors = <Color>[
   Colors.red,
   Colors.pink,
   Colors.purple,
@@ -36,7 +36,7 @@ class ColorChooserScreenMobile extends StatefulWidget {
   const ColorChooserScreenMobile({
     required this.changeColorFunction,
     this.title = 'Choose a Color',
-    this.colors = _colors,
+    this.colors,
     Key? key,
   }) : super(key: key);
 
@@ -50,7 +50,7 @@ class ColorChooserScreenMobile extends StatefulWidget {
   /// If you don't specifiy this, the default
   /// Color List, that is packed with this
   /// package is used.
-  final List<Color> colors;
+  final List<Color>? colors;
 
   /// The Function called to change the
   /// Color of the App.
@@ -63,10 +63,23 @@ class ColorChooserScreenMobile extends StatefulWidget {
 }
 
 class _ColorChooserState extends State<ColorChooserScreenMobile> {
+  /// The Colors shown in this Color Chooser
+  /// Screen.
+  /// If you don't specifiy this, the default
+  /// Color List, that is packed with this
+  /// package is used.
+  late final List<Color> _interalColors;
+
+  @override
+  void initState() {
+    _interalColors = widget.colors ?? _colors;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    while (widget.colors.length % 3 != 0) {
-      widget.colors.add(
+    while (_interalColors.length % 3 != 0) {
+      _interalColors.add(
         Theme.of(context).scaffoldBackgroundColor,
       );
     }
@@ -93,7 +106,7 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
-        itemCount: widget.colors.length,
+        itemCount: _interalColors.length,
         reverse: false,
         addAutomaticKeepAlives: true,
         addRepaintBoundaries: true,
@@ -110,20 +123,20 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
 
           if (counter % 3 == 0) {
             pos = ColorTilePosition.left;
-            colorRight = widget.colors[counter + 1];
+            colorRight = _interalColors[counter + 1];
           } else if (counter % 3 == 1) {
             pos = ColorTilePosition.middle;
-            colorLeft = widget.colors[counter - 1];
-            colorRight = widget.colors[counter + 1];
+            colorLeft = _interalColors[counter - 1];
+            colorRight = _interalColors[counter + 1];
           } else if (counter % 3 == 2) {
             pos = ColorTilePosition.right;
-            colorLeft = widget.colors[counter - 1];
+            colorLeft = _interalColors[counter - 1];
           } else {
             throw Exception('Unexpected Positioning of Color Tile.');
           }
 
           return ColorTile(
-            color: widget.colors[counter],
+            color: _interalColors[counter],
             colorLeft: colorLeft,
             colorRight: colorRight,
             position: pos,
@@ -134,6 +147,9 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
     );
   }
 
+  /// Opens the Sub Color Chooser
+  /// Screen.
+  /// The [color] is the color the User pressed on this Screen.
   void _openSubColorChooser(Color color) {
     Navigator.push(
       context,

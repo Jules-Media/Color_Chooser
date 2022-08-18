@@ -418,7 +418,13 @@ class _SubColorChooserState extends State<SubColorChooserScreenMobile> {
             colorLeft: colorLeft,
             colorRight: colorRight,
             position: pos,
-            onTap: (c) => widget.changeColorFunction(c),
+            onTap: (c) {
+              widget.changeColorFunction(c);
+              // TODO: does it execute twice now?
+              for (int i in [0, 1]) {
+                Navigator.pop(context);
+              }
+            },
           );
         },
       ),
