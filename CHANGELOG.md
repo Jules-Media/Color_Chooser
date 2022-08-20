@@ -1,3 +1,18 @@
+## 0.2.0
+
+* Update Color Tile
+
+
+## 0.1.12
+
+* Add Border Radius to color Tile
+
+
+## 0.1.11
+
+* Update Gradient of Color Tile
+
+
 ## 0.1.10
 
 * Field Update

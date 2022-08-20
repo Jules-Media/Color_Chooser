@@ -4,6 +4,7 @@ import '../color_tile_position.dart';
 
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
+import 'package:helpful_extensions/helpful_extensions.dart' show ColorMapping;
 
 /// Container to represent a single [color].
 /// This is always used in a Grid of 3 Colors in
@@ -82,27 +83,67 @@ class _ColorTileState extends State<ColorTile> {
       child: GestureDetector(
         behavior: HitTestBehavior.deferToChild,
         dragStartBehavior: DragStartBehavior.down,
-        onTap: () {
-          if (widget.color == Theme.of(context).scaffoldBackgroundColor) {
-            return;
-          } else {
-            widget.onTap(widget.color);
-          }
-        },
+        onTap: _onTap,
         child: GridTile(
-          footer: Text(
-            widget.color.value.toRadixString(16).padLeft(11, ' '),
-          ),
+          footer: _footer,
           child: DecoratedBox(
             decoration: BoxDecoration(
               backgroundBlendMode: BlendMode.src,
               gradient: _gradient,
+              borderRadius: _borderRadius,
+              shape: BoxShape.rectangle,
             ),
             position: DecorationPosition.background,
           ),
         ),
       ),
     );
+  }
+
+  /// The Text Style of the Hex Color
+  TextStyle get _tStyle {
+    return TextStyle(
+      color: widget.color.isLight() ? Colors.black : Colors.white,
+    );
+  }
+
+  /// The Footer of the [GridTile]
+  Text? get _footer {
+    if (widget.color == Theme.of(context).scaffoldBackgroundColor) {
+      return null;
+    } else {
+      return Text(
+        widget.color.value.toRadixString(16).padLeft(11, ' '),
+        style: _tStyle,
+      );
+    }
+  }
+
+  /// The Border Radius of the Color
+  /// Tile depending on its [widget.position]
+  BorderRadius get _borderRadius {
+    final BorderRadius r;
+
+    switch (widget.position) {
+      case ColorTilePosition.left:
+        r = const BorderRadius.only(
+          bottomLeft: Radius.circular(25),
+          topLeft: Radius.circular(25),
+        );
+        break;
+
+      case ColorTilePosition.middle:
+        r = const BorderRadius.all(Radius.zero);
+        break;
+
+      case ColorTilePosition.right:
+        r = const BorderRadius.only(
+          bottomRight: Radius.circular(25),
+          topRight: Radius.circular(25),
+        );
+        break;
+    }
+    return r;
   }
 
   /// The Gradient of this Tile.
@@ -114,11 +155,11 @@ class _ColorTileState extends State<ColorTile> {
         gradient = LinearGradient(
           colors: [
             widget.color,
-            widget.colorRight!,
+            Color.lerp(widget.color, widget.colorRight, .5)!
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          stops: const [0.4, 0.6],
+          stops: const [.7, 1.0],
           tileMode: TileMode.clamp,
         );
         break;
@@ -126,13 +167,13 @@ class _ColorTileState extends State<ColorTile> {
       case ColorTilePosition.middle:
         gradient = LinearGradient(
           colors: [
-            widget.colorLeft!,
+            Color.lerp(widget.colorLeft, widget.color, .5)!,
             widget.color,
-            widget.colorRight!,
+            Color.lerp(widget.color, widget.colorRight, .5)!,
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          stops: const [0.1, 0.5, 1.0],
+          stops: const [.15, .5, .75],
           tileMode: TileMode.clamp,
         );
         break;
@@ -140,12 +181,12 @@ class _ColorTileState extends State<ColorTile> {
       case ColorTilePosition.right:
         gradient = LinearGradient(
           colors: [
-            widget.colorLeft!,
+            Color.lerp(widget.colorLeft, widget.color, .5)!,
             widget.color,
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          stops: const [0.4, 0.6],
+          stops: const [.0, .3],
           tileMode: TileMode.clamp,
         );
         break;
@@ -154,5 +195,15 @@ class _ColorTileState extends State<ColorTile> {
         throw Exception('Unexpected enum Value');
     }
     return gradient;
+  }
+
+  /// The function called when
+  /// the Color Tile recognized an onTap event.
+  void _onTap() {
+    if (widget.color == Theme.of(context).scaffoldBackgroundColor) {
+      return;
+    } else {
+      widget.onTap(widget.color);
+    }
   }
 }
