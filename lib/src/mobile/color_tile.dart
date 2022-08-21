@@ -103,7 +103,7 @@ class _ColorTileState extends State<ColorTile> {
   /// The Text Style of the Hex Color
   TextStyle get _tStyle {
     return TextStyle(
-      color: widget.color.isLight() ? Colors.black : Colors.white,
+      color: widget.color.isLight ? Colors.black : Colors.white,
     );
   }
 

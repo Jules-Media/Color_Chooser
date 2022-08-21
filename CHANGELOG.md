@@ -1,3 +1,9 @@
+## 0.2.1
+
+* Update Depencies
+* Update Methods to Getters
+
+
 ## 0.2.0
 
 * Update Color Tile
