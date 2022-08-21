@@ -173,7 +173,7 @@ class _ColorTileState extends State<ColorTile> {
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          stops: const [.15, .5, .75],
+          stops: const [.0, .5, 1.0],
           tileMode: TileMode.clamp,
         );
         break;

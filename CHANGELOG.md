@@ -1,3 +1,8 @@
+## 0.2.2
+
+* Try stuff
+
+
 ## 0.2.1
 
 * Update Depencies
