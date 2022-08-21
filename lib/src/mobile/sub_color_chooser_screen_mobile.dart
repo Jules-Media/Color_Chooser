@@ -394,34 +394,33 @@ class _SubColorChooserState extends State<SubColorChooserScreenMobile> {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
-        itemBuilder: (_, counter) {
+        itemBuilder: (_, count) {
           final ColorTilePosition pos;
-          Color? colorLeft;
-          Color? colorRight;
+          Color? cL;
+          Color? cR;
 
-          if (counter % 3 == 0) {
+          if (count % 3 == 0) {
             pos = ColorTilePosition.left;
-            colorRight = _colors[counter + 1];
-          } else if (counter % 3 == 1) {
+            cR = _colors[count + 1];
+          } else if (count % 3 == 1) {
             pos = ColorTilePosition.middle;
-            colorLeft = _colors[counter - 1];
-            colorRight = _colors[counter + 1];
-          } else if (counter % 3 == 2) {
+            cL = _colors[count - 1];
+            cR = _colors[count + 1];
+          } else if (count % 3 == 2) {
             pos = ColorTilePosition.right;
-            colorLeft = _colors[counter - 1];
+            cL = _colors[count - 1];
           } else {
             throw Exception('Unexpected Positioning of Color Tile.');
           }
 
           return ColorTile(
-            color: _colors[counter],
-            colorLeft: colorLeft,
-            colorRight: colorRight,
+            color: _colors[count],
+            colorLeft: cL,
+            colorRight: cR,
             position: pos,
             onTap: (c) {
               widget.changeColorFunction(c);
-              // TODO: does it execute twice now?
-              for (int i in [0, 1]) {
+              for (int i = 0; i < 2; i++) {
                 Navigator.pop(context);
               }
             },
