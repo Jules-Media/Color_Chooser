@@ -70,6 +70,10 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
   /// package is used.
   late final List<Color> _interalColors;
 
+  /// The current Background Color
+  /// of the Screen.
+  late final Color backgroundColor;
+
   @override
   void initState() {
     _interalColors = widget.colors ?? _colors;
@@ -78,10 +82,9 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
 
   @override
   Widget build(BuildContext context) {
+    backgroundColor = Theme.of(context).scaffoldBackgroundColor;
     while (_interalColors.length % 3 != 0) {
-      _interalColors.add(
-        Theme.of(context).scaffoldBackgroundColor,
-      );
+      _interalColors.add(backgroundColor);
     }
     return Scaffold(
       appBar: _appBar,
@@ -161,5 +164,11 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _interalColors.removeWhere((c) => c == backgroundColor);
+    super.dispose();
   }
 }
