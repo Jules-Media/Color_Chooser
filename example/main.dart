@@ -1,5 +1,6 @@
 library color_chooser;
 
+import 'package:color_chooser/color_chooser.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,6 +12,12 @@ class ExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return MaterialApp(
+      home: ColorChooserScreenMobile(
+        changeColorFunction: (c) {
+          print(c.toString());
+        },
+      ),
+    );
   }
 }

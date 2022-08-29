@@ -1,3 +1,8 @@
+## 0.2.6
+
+* Add Example
+
+
 ## 0.2.5
 
 * Try stuff
