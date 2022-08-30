@@ -1,29 +1,12 @@
 library color_chooser;
 
+import '../color_chooser_screen.dart' show colors;
 import '../color_tile_position.dart';
 import 'color_tile.dart';
 import 'sub_color_chooser_screen_mobile.dart';
 
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
-
-/// All the Colors.
-final _colors = <Color>[
-  Colors.red,
-  Colors.pink,
-  Colors.purple,
-  Colors.yellow,
-  Colors.amber,
-  Colors.orange,
-  Colors.lime,
-  Colors.green,
-  Colors.teal,
-  Colors.indigo,
-  Colors.blue,
-  Colors.cyan,
-  Colors.brown,
-  Colors.black,
-];
 
 /// The Mobile Version of this Color Chooser
 /// The length of the [colors] List should be dividable by 3,
@@ -55,7 +38,7 @@ class ColorChooserScreenMobile extends StatefulWidget {
   /// The Function called to change the
   /// Color of the App.
   /// Is called after going through color Chooser
-  /// and Sub Color Chooser;
+  /// and Sub Color Chooser
   final void Function(Color) changeColorFunction;
 
   @override
@@ -76,7 +59,7 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
 
   @override
   void initState() {
-    _interalColors = widget.colors ?? _colors;
+    _interalColors = widget.colors ?? colors;
     super.initState();
   }
 

@@ -1,3 +1,13 @@
+## 0.3.1
+
+* Export Classes
+
+
+## 0.3.0
+
+* Add Color Chooser Screen Widget that returns the correct Widget depending on the current OS.
+
+
 ## 0.2.6
 
 * Add Example
