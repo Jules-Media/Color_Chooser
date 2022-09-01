@@ -310,7 +310,7 @@ class SubColorChooserScreenMobile extends StatefulWidget {
 
   /// The Function called to change
   /// the Color of the App.
-  final void Function(Color) changeColorFunction;
+  final void Function(Color color) changeColorFunction;
 
   @override
   State<StatefulWidget> createState() => _SubColorChooserState();

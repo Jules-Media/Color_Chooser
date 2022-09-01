@@ -20,7 +20,7 @@ class SubColorChooserScreenDesktop extends StatefulWidget {
 
   /// The Function called to change
   /// the Color of the App.
-  final void Function(Color) changeColorFunction;
+  final void Function(Color color) changeColorFunction;
 
   @override
   State<SubColorChooserScreenDesktop> createState() =>

@@ -40,7 +40,7 @@ class ColorChooserScreen extends StatelessWidget {
   /// Color of the App.
   /// Is called after going through color Chooser
   /// and Sub Color Chooser
-  final void Function(Color) changeColorFunction;
+  final void Function(Color color) changeColorFunction;
 
   /// The Title of the Color Chooser
   final String title;
