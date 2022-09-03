@@ -1,3 +1,13 @@
+## 0.3.4
+
+* Update Dependencies
+
+
+## 0.3.3
+
+* Update late final Fields
+
+
 ## 0.3.2
 
 * Name attributes for required functions

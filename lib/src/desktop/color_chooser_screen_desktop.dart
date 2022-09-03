@@ -47,7 +47,7 @@ class _ColorChooserState extends State<ColorChooserScreenDesktop> {
 
   /// The current Background Color
   /// of the Screen.
-  late final Color backgroundColor;
+  late Color backgroundColor;
 
   @override
   void initState() {
