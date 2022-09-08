@@ -58,6 +58,8 @@ class _SubColorChooserState extends State<SubColorChooserScreenMobile> {
     return Scaffold(
       appBar: _appBar,
       body: _body,
+      extendBody: true,
+      extendBodyBehindAppBar: true,
     );
   }
 

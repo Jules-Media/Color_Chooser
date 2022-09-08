@@ -1,3 +1,8 @@
+## 0.4.8
+
+* Extend Body
+
+
 ## 0.4.7
 
 * Rearrange colors
