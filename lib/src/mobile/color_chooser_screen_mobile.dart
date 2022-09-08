@@ -1,6 +1,6 @@
 library color_chooser;
 
-import '../color_chooser_screen.dart' show colors;
+import '../color_chooser_screen.dart' show colors, getAllInternalColors;
 import '../color_tile_position.dart';
 import 'color_tile.dart';
 import 'sub_color_chooser_screen_mobile.dart';
@@ -53,9 +53,19 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
   /// package is used.
   late final List<Color> _interalColors;
 
+  /// The List with all Colors
+  /// used when the User pressed the
+  /// extend Button
+  late List<Color> _allColors;
+
   /// The current Background Color
   /// of the Screen.
   late Color backgroundColor;
+
+  /// The Variable that
+  /// determines if
+  /// this View is extended or not.
+  bool isExtended = false;
 
   @override
   void initState() {
@@ -66,6 +76,7 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
   @override
   Widget build(BuildContext context) {
     backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    _allColors = getAllInternalColors(backgroundColor);
     while (_interalColors.length % 3 != 0) {
       _interalColors.add(backgroundColor);
     }
@@ -80,6 +91,18 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
     return AppBar(
       automaticallyImplyLeading: true,
       title: Text(widget.title),
+      actions: <IconButton>[
+        IconButton(
+          onPressed: () {
+            setState(() {
+              isExtended = !isExtended;
+            });
+          },
+          icon: isExtended
+              ? const Icon(Icons.expand_less_rounded)
+              : const Icon(Icons.expand_more_rounded),
+        ),
+      ],
     );
   }
 
@@ -92,7 +115,7 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
-        itemCount: _interalColors.length,
+        itemCount: isExtended ? _allColors.length : _interalColors.length,
         reverse: false,
         addAutomaticKeepAlives: true,
         addRepaintBoundaries: true,
@@ -109,28 +132,46 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
 
           if (counter % 3 == 0) {
             pos = ColorTilePosition.left;
-            colorRight = _interalColors[counter + 1];
+            colorRight = isExtended
+                ? _allColors[counter + 1]
+                : _interalColors[counter + 1];
           } else if (counter % 3 == 1) {
             pos = ColorTilePosition.middle;
-            colorLeft = _interalColors[counter - 1];
-            colorRight = _interalColors[counter + 1];
+            colorLeft = isExtended
+                ? _allColors[counter - 1]
+                : _interalColors[counter - 1];
+            colorRight = isExtended
+                ? _allColors[counter + 1]
+                : _interalColors[counter + 1];
           } else if (counter % 3 == 2) {
             pos = ColorTilePosition.right;
-            colorLeft = _interalColors[counter - 1];
+            colorLeft = isExtended
+                ? _allColors[counter - 1]
+                : _interalColors[counter - 1];
           } else {
             throw Exception('Unexpected Positioning of Color Tile.');
           }
 
           return ColorTile(
-            color: _interalColors[counter],
+            color: isExtended ? _allColors[counter] : _interalColors[counter],
             colorLeft: colorLeft,
             colorRight: colorRight,
             position: pos,
-            onTap: (c) => _openSubColorChooser(c),
+            onTap: (c) => onTap(c),
           );
         },
       ),
     );
+  }
+
+  /// Called when the User taps on the
+  void onTap(Color c) {
+    if (isExtended) {
+      widget.changeColorFunction(c);
+      Navigator.pop(context);
+    } else {
+      _openSubColorChooser(c);
+    }
   }
 
   /// Opens the Sub Color Chooser

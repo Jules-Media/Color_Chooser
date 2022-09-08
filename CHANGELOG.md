@@ -1,3 +1,44 @@
+## 0.4.7
+
+* Rearrange colors
+
+
+## 0.4.6
+
+* Internal changes
+
+
+## 0.4.5
+
+* some internal changes
+
+
+## 0.4.4
+
+* Fix stuff
+
+
+## 0.4.3
+
+* Fix stuff
+
+
+## 0.4.2
+
+* Bugfix
+* Try stuff
+
+
+## 0.4.1
+
+* Bugfix
+
+
+## 0.4.0
+
+* Add Button for Big Grid ([#3](https://github.com/Jules-Media/Color_Chooser/issues/3))
+
+
 ## 0.3.4
 
 * Update Dependencies
