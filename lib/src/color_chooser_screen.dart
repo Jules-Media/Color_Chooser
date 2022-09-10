@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 
 import 'package:color_chooser/color_chooser.dart';
 import 'package:flutter/material.dart';
+import 'package:helpful_extensions/helpful_extensions.dart';
 
 /// All the Colors.
 @protected
@@ -324,8 +325,11 @@ final List<Color> brownColors = [
 List<Color> getAllInternalColors(Color backgroundColor) {
   final List<Color> list = [];
   for (Color color in colors) {
-    list.add(color);
-    list.addAll(shapesOfColor(color));
+    final List<Color> l = [];
+    l.add(color);
+    l.addAll(shapesOfColor(color));
+    l.colorSort(optionsForColor(color));
+    list.addAll(l);
   }
 
   while (list.length % 3 != 0) {
@@ -377,6 +381,7 @@ class ColorChooserScreen extends StatelessWidget {
   ColorChooserScreen({
     required this.changeColorFunction,
     this.title = 'Choose a Color',
+    this.actionToolTip = 'Extend List',
     this.colors,
     Key? key,
   }) : super(key: key) {
@@ -391,6 +396,11 @@ class ColorChooserScreen extends StatelessWidget {
 
   /// The Title of the Color Chooser
   final String title;
+
+  /// The Tooltip for the
+  /// action to extend the
+  /// list of colors.
+  final String actionToolTip;
 
   /// The Colors shown in this Color Chooser
   /// Screen.
@@ -412,6 +422,7 @@ class ColorChooserScreen extends StatelessWidget {
     bool? isDesktop,
     String? os,
     this.title = 'Choose a Color',
+    this.actionToolTip = 'Extend List',
     this.colors,
     required this.changeColorFunction,
     Key? key,
@@ -438,6 +449,7 @@ class ColorChooserScreen extends StatelessWidget {
       return ColorChooserScreenMobile(
         changeColorFunction: changeColorFunction,
         title: title,
+        actionToolTip: actionToolTip,
         colors: colors,
         key: key,
       );

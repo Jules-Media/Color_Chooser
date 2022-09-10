@@ -19,6 +19,7 @@ class ColorChooserScreenMobile extends StatefulWidget {
   const ColorChooserScreenMobile({
     required this.changeColorFunction,
     this.title = 'Choose a Color',
+    this.actionToolTip = 'Extend List',
     this.colors,
     Key? key,
   }) : super(key: key);
@@ -27,6 +28,11 @@ class ColorChooserScreenMobile extends StatefulWidget {
   /// This is shown on Top
   /// of the Screen.
   final String title;
+
+  /// The Tooltip for the
+  /// action to extend the
+  /// list of colors.
+  final String actionToolTip;
 
   /// The Colors shown in this Color Chooser
   /// Screen.
@@ -95,6 +101,7 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
       title: Text(widget.title),
       actions: <IconButton>[
         IconButton(
+          tooltip: widget.actionToolTip,
           onPressed: () {
             setState(() {
               isExtended = !isExtended;
@@ -129,14 +136,15 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
         scrollDirection: Axis.vertical,
         itemBuilder: (_, counter) {
           final ColorTilePosition pos;
-          Color? colorLeft;
-          Color? colorRight;
+          final Color? colorLeft;
+          final Color? colorRight;
 
           if (counter % 3 == 0) {
             pos = ColorTilePosition.left;
             colorRight = isExtended
                 ? _allColors[counter + 1]
                 : _interalColors[counter + 1];
+            colorLeft = null;
           } else if (counter % 3 == 1) {
             pos = ColorTilePosition.middle;
             colorLeft = isExtended
@@ -150,6 +158,7 @@ class _ColorChooserState extends State<ColorChooserScreenMobile> {
             colorLeft = isExtended
                 ? _allColors[counter - 1]
                 : _interalColors[counter - 1];
+            colorRight = null;
           } else {
             throw Exception('Unexpected Positioning of Color Tile.');
           }
