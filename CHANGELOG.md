@@ -1,3 +1,7 @@
+## 0.4.12
+
+* Update dart and Flutter Version
+
 ## 0.4.11
 
 * Bugfix
