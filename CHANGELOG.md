@@ -1,3 +1,7 @@
+## 0.4.13
+
+* Update dependencies
+
 ## 0.4.12
 
 * Update dart and Flutter Version
